@@ -17,7 +17,7 @@ func InitializeVerifier(votersCommitment types.GenericDigest, lnProvenWeight uin
 		lnProvenWeight, strengthTarget)}
 }
 
-func (v *StateProofVerifier) VerifyStateProofMessage(stateProof *types.EncodedStateProof, message types.Message) error {
+func (v *StateProofVerifier) VerifyStateProofMessage(stateProof *types.EncodedStateProof, message *types.Message) error {
 	messageHash := message.IntoStateProofMessageHash()
 
 	var decodedStateProof stateproof.StateProof
