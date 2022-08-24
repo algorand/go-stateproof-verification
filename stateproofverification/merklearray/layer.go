@@ -1,20 +1,20 @@
 package merklearray
 
 import (
-	"github.com/algorand/go-stateproof-verification/basics"
 	"github.com/algorand/go-stateproof-verification/transactionverification"
+	"github.com/algorand/go-stateproof-verification/types"
 )
 
 // A Layer of the Merkle tree consists of a dense array of hashes at that
 // level of the tree.  Hashes beyond the end of the array (e.g., if the
 // number of leaves is not an exact power of 2) are implicitly zero.
 //msgp:allocbound Layer MaxNumLeavesOnEncodedTree
-type Layer []basics.GenericDigest
+type Layer []types.GenericDigest
 
 // A pair represents an internal node in the Merkle tree.
 type pair struct {
-	l              basics.GenericDigest
-	r              basics.GenericDigest
+	l              types.GenericDigest
+	r              types.GenericDigest
 	hashDigestSize int
 }
 

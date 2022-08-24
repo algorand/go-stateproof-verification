@@ -2,8 +2,8 @@ package stateproof
 
 import (
 	"encoding/binary"
-	"github.com/algorand/go-stateproof-verification/basics"
 	"github.com/algorand/go-stateproof-verification/transactionverification"
+	"github.com/algorand/go-stateproof-verification/types"
 	"golang.org/x/crypto/sha3"
 	"math/big"
 )
@@ -13,9 +13,9 @@ import (
 type coinChoiceSeed struct {
 	// the ToBeHashed function should be updated when fields are added to this structure
 	version        byte
-	partCommitment basics.GenericDigest
+	partCommitment types.GenericDigest
 	lnProvenWeight uint64
-	sigCommitment  basics.GenericDigest
+	sigCommitment  types.GenericDigest
 	signedWeight   uint64
 	data           transactionverification.MessageHash
 }

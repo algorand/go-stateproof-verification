@@ -1,10 +1,10 @@
 package stateproof
 
 import (
-	"github.com/algorand/go-stateproof-verification/basics"
 	"github.com/algorand/go-stateproof-verification/stateproofverification/merklearray"
 	"github.com/algorand/go-stateproof-verification/stateproofverification/merklesignature"
 	"github.com/algorand/go-stateproof-verification/stateproofverification/stateproofbasics"
+	"github.com/algorand/go-stateproof-verification/types"
 )
 
 //msgp:ignore sigslot
@@ -47,11 +47,11 @@ type Reveal struct {
 type StateProof struct {
 	_struct struct{} `codec:",omitempty,omitemptyarray"`
 
-	SigCommit                  basics.GenericDigest `codec:"c"`
-	SignedWeight               uint64               `codec:"w"`
-	SigProofs                  merklearray.Proof    `codec:"S"`
-	PartProofs                 merklearray.Proof    `codec:"P"`
-	MerkleSignatureSaltVersion byte                 `codec:"v"`
+	SigCommit                  types.GenericDigest `codec:"c"`
+	SignedWeight               uint64              `codec:"w"`
+	SigProofs                  merklearray.Proof   `codec:"S"`
+	PartProofs                 merklearray.Proof   `codec:"P"`
+	MerkleSignatureSaltVersion byte                `codec:"v"`
 	// Reveals is a sparse map from the position being revealed
 	// to the corresponding elements from the sigs and participants
 	// arrays.

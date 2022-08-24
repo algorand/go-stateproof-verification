@@ -3,9 +3,9 @@ package stateproof
 import (
 	"errors"
 	"fmt"
-	"github.com/algorand/go-stateproof-verification/basics"
 	"github.com/algorand/go-stateproof-verification/stateproofverification/merklearray"
 	"github.com/algorand/go-stateproof-verification/transactionverification"
+	"github.com/algorand/go-stateproof-verification/types"
 )
 
 // Errors for the StateProof verifier
@@ -19,12 +19,12 @@ var (
 type Verifier struct {
 	strengthTarget         uint64
 	lnProvenWeight         uint64 // ln(provenWeight) as integer with 16 bits of precision
-	participantsCommitment basics.GenericDigest
+	participantsCommitment types.GenericDigest
 }
 
 // MkVerifierWithLnProvenWeight constructs a verifier to check the state proof. the arguments for this function
 // represent all the verifier's trusted data. This function uses the Ln(provenWeight) approximation value
-func MkVerifierWithLnProvenWeight(partcom basics.GenericDigest, lnProvenWt uint64, strengthTarget uint64) *Verifier {
+func MkVerifierWithLnProvenWeight(partcom types.GenericDigest, lnProvenWt uint64, strengthTarget uint64) *Verifier {
 	return &Verifier{
 		strengthTarget:         strengthTarget,
 		lnProvenWeight:         lnProvenWt,

@@ -7,8 +7,8 @@ import (
 	"hash"
 	"sort"
 
-	"github.com/algorand/go-stateproof-verification/basics"
 	"github.com/algorand/go-stateproof-verification/transactionverification"
+	"github.com/algorand/go-stateproof-verification/types"
 )
 
 const (
@@ -61,8 +61,8 @@ func convertIndexes(elems map[uint64]transactionverification.Hashable, treeDepth
 	return msbIndexedElements, nil
 }
 
-func hashLeaves(elems map[uint64]transactionverification.Hashable, treeDepth uint8, hash hash.Hash) (map[uint64]basics.GenericDigest, error) {
-	hashedLeaves := make(map[uint64]basics.GenericDigest, len(elems))
+func hashLeaves(elems map[uint64]transactionverification.Hashable, treeDepth uint8, hash hash.Hash) (map[uint64]types.GenericDigest, error) {
+	hashedLeaves := make(map[uint64]types.GenericDigest, len(elems))
 	for i, element := range elems {
 		if i >= (1 << treeDepth) {
 			return nil, fmt.Errorf("pos %d >= 1^treeDepth %d: %w", i, 1<<treeDepth, ErrPosOutOfBound)
@@ -73,7 +73,7 @@ func hashLeaves(elems map[uint64]transactionverification.Hashable, treeDepth uin
 	return hashedLeaves, nil
 }
 
-func buildFirstPartialLayer(elems map[uint64]basics.GenericDigest) partialLayer {
+func buildFirstPartialLayer(elems map[uint64]types.GenericDigest) partialLayer {
 	pl := make(partialLayer, 0, len(elems))
 	for pos, elem := range elems {
 		pl = append(pl, layerItem{
@@ -86,7 +86,7 @@ func buildFirstPartialLayer(elems map[uint64]basics.GenericDigest) partialLayer 
 	return pl
 }
 
-func inspectRoot(root basics.GenericDigest, pl partialLayer) error {
+func inspectRoot(root types.GenericDigest, pl partialLayer) error {
 	computedroot := pl[0]
 	if computedroot.pos != 0 || !bytes.Equal(computedroot.hash, root) {
 		return ErrRootMismatch
@@ -94,7 +94,7 @@ func inspectRoot(root basics.GenericDigest, pl partialLayer) error {
 	return nil
 }
 
-func verifyPath(root basics.GenericDigest, proof *Proof, pl partialLayer) error {
+func verifyPath(root types.GenericDigest, proof *Proof, pl partialLayer) error {
 	hints := proof.Path
 
 	s := &siblings{
@@ -115,7 +115,7 @@ func verifyPath(root basics.GenericDigest, proof *Proof, pl partialLayer) error 
 // Verify ensures that the positions in elems correspond to the respective hashes
 // in a tree with the given root hash.  The proof is expected to be the proof
 // returned by Prove().
-func Verify(root basics.GenericDigest, elems map[uint64]transactionverification.Hashable, proof *Proof) error {
+func Verify(root types.GenericDigest, elems map[uint64]transactionverification.Hashable, proof *Proof) error {
 	if proof == nil {
 		return ErrProofIsNil
 	}
@@ -137,7 +137,7 @@ func Verify(root basics.GenericDigest, elems map[uint64]transactionverification.
 }
 
 // VerifyVectorCommitment verifies a vector commitment proof against a given root.
-func VerifyVectorCommitment(root basics.GenericDigest, elems map[uint64]transactionverification.Hashable, proof *Proof) error {
+func VerifyVectorCommitment(root types.GenericDigest, elems map[uint64]transactionverification.Hashable, proof *Proof) error {
 	if proof == nil {
 		return ErrProofIsNil
 	}

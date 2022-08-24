@@ -1,4 +1,4 @@
-package basics
+package types
 
 import (
 	"bytes"
