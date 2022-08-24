@@ -30,6 +30,11 @@ type SingleLeafProof struct {
 	Proof
 }
 
+// MsgIsZero returns whether this is a zero value
+func (z *SingleLeafProof) MsgIsZero() bool {
+	return (len((*z).Proof.Path) == 0) && ((*z).Proof.HashFactory.MsgIsZero()) && ((*z).Proof.TreeDepth == 0)
+}
+
 // GetFixedLengthHashableRepresentation serializes the proof into a sequence of bytes.
 // it basically concatenates the elements of the verification path one after another.
 // The function returns a fixed length array for each hash function. which is 1 + MaxEncodedTreeDepth * digestsize

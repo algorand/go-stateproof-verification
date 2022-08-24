@@ -64,6 +64,11 @@ type HashFactory struct {
 	HashType HashType `codec:"t"`
 }
 
+// MsgIsZero returns whether this is a zero value
+func (z *HashFactory) MsgIsZero() bool {
+	return ((*z).HashType == 0)
+}
+
 var errUnknownHash = errors.New("unknown hash type")
 
 func (h HashType) String() string {

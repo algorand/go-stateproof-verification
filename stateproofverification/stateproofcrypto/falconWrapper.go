@@ -39,6 +39,11 @@ type FalconVerifier struct {
 	PublicKey FalconPublicKey `codec:"k"`
 }
 
+// MsgIsZero returns whether this is a zero value
+func (z *FalconVerifier) MsgIsZero() bool {
+	return ((*z).PublicKey == (FalconPublicKey{}))
+}
+
 // VerifyBytes follows falcon algorithm to verify a signature.
 func (d *FalconVerifier) VerifyBytes(data []byte, sig FalconSignature) error {
 	// The wrapper, currently, support only the compress form signature. so we can
@@ -50,6 +55,11 @@ func (d *FalconVerifier) VerifyBytes(data []byte, sig FalconSignature) error {
 // GetFixedLengthHashableRepresentation is used to fetch a plain serialized version of the public data (without the use of the msgpack).
 func (d *FalconVerifier) GetFixedLengthHashableRepresentation() []byte {
 	return d.PublicKey[:]
+}
+
+// MsgIsZero returns whether this is a zero value
+func (z FalconSignature) MsgIsZero() bool {
+	return len(z) == 0
 }
 
 // GetFixedLengthHashableRepresentation returns a serialized version of the signature
