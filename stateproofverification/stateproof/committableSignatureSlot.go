@@ -4,7 +4,7 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
-	"github.com/algorand/go-stateproof-verification/transactionverification"
+	"github.com/algorand/go-stateproof-verification/types"
 )
 
 type committableSignatureSlot struct {
@@ -26,7 +26,7 @@ func (sc committableSignatureSlotArray) Length() uint64 {
 	return uint64(len(sc))
 }
 
-func (sc committableSignatureSlotArray) Marshal(pos uint64) (transactionverification.Hashable, error) {
+func (sc committableSignatureSlotArray) Marshal(pos uint64) (types.Hashable, error) {
 	if pos >= uint64(len(sc)) {
 		return nil, fmt.Errorf("%w: pos %d past end %d", ErrIndexOutOfBound, pos, len(sc))
 	}
@@ -57,9 +57,9 @@ func buildCommittableSignature(sigCommit sigslotCommit) (*committableSignatureSl
 // In order to create a more SNARK-friendly commitment we must avoid using the msgpack infrastructure.
 // msgpack creates a compressed representation of the struct which might be varied in length, this will
 // be bad for creating SNARK
-func (cs *committableSignatureSlot) ToBeHashed() (transactionverification.HashID, []byte) {
+func (cs *committableSignatureSlot) ToBeHashed() (types.HashID, []byte) {
 	if cs.isEmptySlot {
-		return transactionverification.StateProofSig, []byte{}
+		return types.StateProofSig, []byte{}
 	}
 	var binaryLValue [8]byte
 	binary.LittleEndian.PutUint64(binaryLValue[:], cs.sigCommit.L)
@@ -68,5 +68,5 @@ func (cs *committableSignatureSlot) ToBeHashed() (transactionverification.HashID
 	sigSlotByteRepresentation = append(sigSlotByteRepresentation, binaryLValue[:]...)
 	sigSlotByteRepresentation = append(sigSlotByteRepresentation, cs.serializedSignature...)
 
-	return transactionverification.StateProofSig, sigSlotByteRepresentation
+	return types.StateProofSig, sigSlotByteRepresentation
 }

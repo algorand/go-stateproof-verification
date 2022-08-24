@@ -1,7 +1,6 @@
 package merklearray
 
 import (
-	"github.com/algorand/go-stateproof-verification/transactionverification"
 	"github.com/algorand/go-stateproof-verification/types"
 )
 
@@ -18,12 +17,12 @@ type pair struct {
 	hashDigestSize int
 }
 
-func (p *pair) ToBeHashed() (transactionverification.HashID, []byte) {
+func (p *pair) ToBeHashed() (types.HashID, []byte) {
 	// hashing of internal node will always be fixed length.
 	// If one of the children is missing we use [0...0].
 	// The size of the slice is based on the relevant hash function output size
 	buf := make([]byte, 2*p.hashDigestSize)
 	copy(buf[:], p.l[:])
 	copy(buf[len(p.l):], p.r[:])
-	return transactionverification.MerkleArrayNode, buf[:]
+	return types.MerkleArrayNode, buf[:]
 }

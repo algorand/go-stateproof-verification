@@ -1,7 +1,6 @@
 package merklearray
 
 import (
-	"github.com/algorand/go-stateproof-verification/transactionverification"
 	"github.com/algorand/go-stateproof-verification/types"
 )
 
@@ -14,8 +13,8 @@ type Proof struct {
 	// Path is bounded by MaxNumLeavesOnEncodedTree since there could be multiple reveals, and
 	// given the distribution of the elt positions and the depth of the tree,
 	// the path length can increase up to 2^MaxEncodedTreeDepth / 2
-	Path        []types.GenericDigest               `codec:"pth,allocbound=MaxNumLeavesOnEncodedTree/2"`
-	HashFactory transactionverification.HashFactory `codec:"hsh"`
+	Path        []types.GenericDigest `codec:"pth,allocbound=MaxNumLeavesOnEncodedTree/2"`
+	HashFactory types.HashFactory     `codec:"hsh"`
 	// TreeDepth represents the depth of the tree that is being proven.
 	// It is the number of edges from the root to a leaf.
 	TreeDepth uint8 `codec:"td"`

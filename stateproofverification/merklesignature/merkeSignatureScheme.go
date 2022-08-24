@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"github.com/algorand/go-stateproof-verification/stateproofverification/merklearray"
 	"github.com/algorand/go-stateproof-verification/stateproofverification/stateproofcrypto"
-	"github.com/algorand/go-stateproof-verification/transactionverification"
+	"github.com/algorand/go-stateproof-verification/types"
 )
 
 // Errors for the merkle signature scheme
@@ -82,7 +82,7 @@ func (v *Verifier) VerifyBytes(round uint64, msg []byte, sig *Signature) error {
 	// verification path and the index.
 	err = merklearray.VerifyVectorCommitment(
 		v.Commitment[:],
-		map[uint64]transactionverification.Hashable{sig.VectorCommitmentIndex: &ephkey},
+		map[uint64]types.Hashable{sig.VectorCommitmentIndex: &ephkey},
 		sig.Proof.ToProof(),
 	)
 	if err != nil {

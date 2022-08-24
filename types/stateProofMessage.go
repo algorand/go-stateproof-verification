@@ -1,4 +1,4 @@
-package transactionverification
+package types
 
 import (
 	"crypto/sha256"

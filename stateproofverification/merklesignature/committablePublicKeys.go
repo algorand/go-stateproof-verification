@@ -3,7 +3,7 @@ package merklesignature
 import (
 	"encoding/binary"
 	"github.com/algorand/go-stateproof-verification/stateproofverification/stateproofcrypto"
-	"github.com/algorand/go-stateproof-verification/transactionverification"
+	"github.com/algorand/go-stateproof-verification/types"
 )
 
 type (
@@ -27,7 +27,7 @@ type (
 // In order to create a more SNARK-friendly commitment we must avoid using the msgpack infrastructure.
 // msgpack creates a compressed representation of the struct which might be varied in length, this will
 // be bad for creating SNARK
-func (e *CommittablePublicKey) ToBeHashed() (transactionverification.HashID, []byte) {
+func (e *CommittablePublicKey) ToBeHashed() (types.HashID, []byte) {
 	verifyingRawKey := e.VerifyingKey.GetFixedLengthHashableRepresentation()
 
 	var roundAsBytes [8]byte
@@ -41,5 +41,5 @@ func (e *CommittablePublicKey) ToBeHashed() (transactionverification.HashID, []b
 	keyCommitment = append(keyCommitment, roundAsBytes[:]...)
 	keyCommitment = append(keyCommitment, verifyingRawKey...)
 
-	return transactionverification.KeysInMSS, keyCommitment
+	return types.KeysInMSS, keyCommitment
 }

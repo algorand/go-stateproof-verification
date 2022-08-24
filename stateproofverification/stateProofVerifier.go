@@ -3,7 +3,6 @@ package stateproofverification
 import (
 	"github.com/algorand/go-stateproof-verification/msgpack"
 	"github.com/algorand/go-stateproof-verification/stateproofverification/stateproof"
-	"github.com/algorand/go-stateproof-verification/transactionverification"
 	"github.com/algorand/go-stateproof-verification/types"
 )
 
@@ -18,7 +17,7 @@ func InitializeVerifier(votersCommitment types.GenericDigest, lnProvenWeight uin
 		lnProvenWeight, strengthTarget)}
 }
 
-func (v *StateProofVerifier) VerifyStateProofMessage(stateProof *transactionverification.EncodedStateProof, message transactionverification.Message) error {
+func (v *StateProofVerifier) VerifyStateProofMessage(stateProof *types.EncodedStateProof, message types.Message) error {
 	messageHash := message.IntoStateProofMessageHash()
 
 	var decodedStateProof stateproof.StateProof

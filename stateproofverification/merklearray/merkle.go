@@ -7,7 +7,6 @@ import (
 	"hash"
 	"sort"
 
-	"github.com/algorand/go-stateproof-verification/transactionverification"
 	"github.com/algorand/go-stateproof-verification/types"
 )
 
@@ -43,14 +42,14 @@ type Tree struct {
 	NumOfElements uint64 `codec:"nl"`
 
 	// Hash represents the hash function which is being used on elements in this tree.
-	Hash transactionverification.HashFactory `codec:"hsh"`
+	Hash types.HashFactory `codec:"hsh"`
 
 	// IsVectorCommitment determines whether the tree was built as a vector commitment
 	IsVectorCommitment bool `codec:"vc"`
 }
 
-func convertIndexes(elems map[uint64]transactionverification.Hashable, treeDepth uint8) (map[uint64]transactionverification.Hashable, error) {
-	msbIndexedElements := make(map[uint64]transactionverification.Hashable, len(elems))
+func convertIndexes(elems map[uint64]types.Hashable, treeDepth uint8) (map[uint64]types.Hashable, error) {
+	msbIndexedElements := make(map[uint64]types.Hashable, len(elems))
 	for i, e := range elems {
 		idx, err := merkleTreeToVectorCommitmentIndex(i, treeDepth)
 		if err != nil {
@@ -61,13 +60,13 @@ func convertIndexes(elems map[uint64]transactionverification.Hashable, treeDepth
 	return msbIndexedElements, nil
 }
 
-func hashLeaves(elems map[uint64]transactionverification.Hashable, treeDepth uint8, hash hash.Hash) (map[uint64]types.GenericDigest, error) {
+func hashLeaves(elems map[uint64]types.Hashable, treeDepth uint8, hash hash.Hash) (map[uint64]types.GenericDigest, error) {
 	hashedLeaves := make(map[uint64]types.GenericDigest, len(elems))
 	for i, element := range elems {
 		if i >= (1 << treeDepth) {
 			return nil, fmt.Errorf("pos %d >= 1^treeDepth %d: %w", i, 1<<treeDepth, ErrPosOutOfBound)
 		}
-		hashedLeaves[i] = transactionverification.GenericHashObj(hash, element)
+		hashedLeaves[i] = types.GenericHashObj(hash, element)
 	}
 
 	return hashedLeaves, nil
@@ -115,7 +114,7 @@ func verifyPath(root types.GenericDigest, proof *Proof, pl partialLayer) error {
 // Verify ensures that the positions in elems correspond to the respective hashes
 // in a tree with the given root hash.  The proof is expected to be the proof
 // returned by Prove().
-func Verify(root types.GenericDigest, elems map[uint64]transactionverification.Hashable, proof *Proof) error {
+func Verify(root types.GenericDigest, elems map[uint64]types.Hashable, proof *Proof) error {
 	if proof == nil {
 		return ErrProofIsNil
 	}
@@ -137,7 +136,7 @@ func Verify(root types.GenericDigest, elems map[uint64]transactionverification.H
 }
 
 // VerifyVectorCommitment verifies a vector commitment proof against a given root.
-func VerifyVectorCommitment(root types.GenericDigest, elems map[uint64]transactionverification.Hashable, proof *Proof) error {
+func VerifyVectorCommitment(root types.GenericDigest, elems map[uint64]types.Hashable, proof *Proof) error {
 	if proof == nil {
 		return ErrProofIsNil
 	}

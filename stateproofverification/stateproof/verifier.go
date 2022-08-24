@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/algorand/go-stateproof-verification/stateproofverification/merklearray"
-	"github.com/algorand/go-stateproof-verification/transactionverification"
 	"github.com/algorand/go-stateproof-verification/types"
 )
 
@@ -34,7 +33,7 @@ func MkVerifierWithLnProvenWeight(partcom types.GenericDigest, lnProvenWt uint64
 
 // Verify checks if s is a valid state proof for the data on a round.
 // it uses the trusted data from the Verifier struct
-func (v *Verifier) Verify(round uint64, data transactionverification.MessageHash, s *StateProof) error {
+func (v *Verifier) Verify(round uint64, data types.MessageHash, s *StateProof) error {
 	if err := verifyStateProofTreesDepth(s); err != nil {
 		return err
 	}
@@ -51,8 +50,8 @@ func (v *Verifier) Verify(round uint64, data transactionverification.MessageHash
 		}
 	}
 
-	sigs := make(map[uint64]transactionverification.Hashable)
-	parts := make(map[uint64]transactionverification.Hashable)
+	sigs := make(map[uint64]types.Hashable)
+	parts := make(map[uint64]types.Hashable)
 
 	for pos, r := range s.Reveals {
 		sig, err := buildCommittableSignature(r.SigSlot)

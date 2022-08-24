@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"hash"
 
-	"github.com/algorand/go-stateproof-verification/transactionverification"
 	"github.com/algorand/go-stateproof-verification/types"
 )
 
@@ -102,7 +101,7 @@ func (pl partialLayer) up(s *siblings, l uint64, doHash bool, hsh hash.Hash) (pa
 				p.l = siblingHash
 				p.r = posHash
 			}
-			nextLayerHash = transactionverification.GenericHashObj(hsh, &p)
+			nextLayerHash = types.GenericHashObj(hsh, &p)
 		}
 
 		res = append(res, layerItem{
