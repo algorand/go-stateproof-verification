@@ -5,7 +5,7 @@ import (
 
 	"github.com/algorand/go-algorand-sdk/types"
 
-	"github.com/algorand/go-stateproof-verification/stateproofverification/merklesignature"
+	"github.com/algorand/go-stateproof-verification/merklesignature"
 )
 
 const StateProofPart types.HashID = "spp"
