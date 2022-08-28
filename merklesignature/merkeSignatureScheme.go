@@ -5,8 +5,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/algorand/go-algorand-sdk/types"
-	"github.com/algorand/go-stateproof-verification/stateproofverification/merklearray"
-	"github.com/algorand/go-stateproof-verification/stateproofverification/stateproofcrypto"
+	"github.com/algorand/go-stateproof-verification/merklearray"
+	"github.com/algorand/go-stateproof-verification/stateproofcrypto"
 )
 
 // Errors for the merkle signature scheme

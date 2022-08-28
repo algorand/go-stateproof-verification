@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/algorand/go-algorand-sdk/types"
-	"github.com/algorand/go-stateproof-verification/stateproofverification/merklearray"
+	"github.com/algorand/go-stateproof-verification/merklearray"
 )
 
 // Errors for the StateProof verifier
