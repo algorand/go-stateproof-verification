@@ -2,9 +2,13 @@ package merklesignature
 
 import (
 	"encoding/binary"
+
+	"github.com/algorand/go-algorand-sdk/types"
+
 	"github.com/algorand/go-stateproof-verification/stateproofverification/stateproofcrypto"
-	"github.com/algorand/go-stateproof-verification/types"
 )
+
+const KeysInMSS types.HashID = "KP"
 
 type (
 	// committablePublicKeyArray used to arrange the keys so a merkle tree could be build on them.
@@ -41,5 +45,5 @@ func (e *CommittablePublicKey) ToBeHashed() (types.HashID, []byte) {
 	keyCommitment = append(keyCommitment, roundAsBytes[:]...)
 	keyCommitment = append(keyCommitment, verifyingRawKey...)
 
-	return types.KeysInMSS, keyCommitment
+	return KeysInMSS, keyCommitment
 }

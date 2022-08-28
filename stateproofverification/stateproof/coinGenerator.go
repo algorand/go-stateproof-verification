@@ -2,10 +2,13 @@ package stateproof
 
 import (
 	"encoding/binary"
-	"github.com/algorand/go-stateproof-verification/types"
 	"golang.org/x/crypto/sha3"
 	"math/big"
+
+	"github.com/algorand/go-algorand-sdk/types"
 )
+
+const StateProofCoin types.HashID = "spc"
 
 // The coinChoiceSeed defines the randomness seed that will be given to an XOF function. This will be used for choosing
 // the index of the coin to reveal as part of the state proof.
@@ -38,7 +41,7 @@ func (cc *coinChoiceSeed) ToBeHashed() (types.HashID, []byte) {
 	coinChoiceBytes = append(coinChoiceBytes, signedWtAsBytes[:]...)
 	coinChoiceBytes = append(coinChoiceBytes, cc.data[:]...)
 
-	return types.StateProofCoin, coinChoiceBytes
+	return StateProofCoin, coinChoiceBytes
 }
 
 // coinGenerator is used for extracting "randomized" 64 bits for coin flips

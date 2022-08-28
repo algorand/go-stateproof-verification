@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"hash"
 
-	"github.com/algorand/go-stateproof-verification/types"
+	"github.com/algorand/go-algorand-sdk/types"
 )
 
 // siblings represents the siblings needed to compute the root hash

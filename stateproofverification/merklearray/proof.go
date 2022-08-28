@@ -1,7 +1,7 @@
 package merklearray
 
 import (
-	"github.com/algorand/go-stateproof-verification/types"
+	"github.com/algorand/go-algorand-sdk/types"
 )
 
 // Proof is used to convince a verifier about membership of leaves: h0,h1...hn

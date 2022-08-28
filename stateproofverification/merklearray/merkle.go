@@ -7,7 +7,7 @@ import (
 	"hash"
 	"sort"
 
-	"github.com/algorand/go-stateproof-verification/types"
+	"github.com/algorand/go-algorand-sdk/types"
 )
 
 const (

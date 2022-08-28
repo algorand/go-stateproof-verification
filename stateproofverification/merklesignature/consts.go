@@ -1,7 +1,7 @@
 package merklesignature
 
 import (
-	"github.com/algorand/go-stateproof-verification/types"
+	"github.com/algorand/go-algorand-sdk/types"
 )
 
 // HashType/ hashSize relate to the type of hash this package uses.

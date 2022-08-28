@@ -1,10 +1,10 @@
 package stateproof
 
 import (
+	"github.com/algorand/go-algorand-sdk/types"
 	"github.com/algorand/go-stateproof-verification/stateproofverification/merklearray"
 	"github.com/algorand/go-stateproof-verification/stateproofverification/merklesignature"
 	"github.com/algorand/go-stateproof-verification/stateproofverification/stateproofbasics"
-	"github.com/algorand/go-stateproof-verification/types"
 )
 
 //msgp:ignore sigslot

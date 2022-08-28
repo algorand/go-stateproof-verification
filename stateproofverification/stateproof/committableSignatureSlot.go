@@ -4,8 +4,10 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
-	"github.com/algorand/go-stateproof-verification/types"
+	"github.com/algorand/go-algorand-sdk/types"
 )
+
+const StateProofSig types.HashID = "sps"
 
 type committableSignatureSlot struct {
 	sigCommit           sigslotCommit
@@ -59,7 +61,7 @@ func buildCommittableSignature(sigCommit sigslotCommit) (*committableSignatureSl
 // be bad for creating SNARK
 func (cs *committableSignatureSlot) ToBeHashed() (types.HashID, []byte) {
 	if cs.isEmptySlot {
-		return types.StateProofSig, []byte{}
+		return StateProofSig, []byte{}
 	}
 	var binaryLValue [8]byte
 	binary.LittleEndian.PutUint64(binaryLValue[:], cs.sigCommit.L)
@@ -68,5 +70,5 @@ func (cs *committableSignatureSlot) ToBeHashed() (types.HashID, []byte) {
 	sigSlotByteRepresentation = append(sigSlotByteRepresentation, binaryLValue[:]...)
 	sigSlotByteRepresentation = append(sigSlotByteRepresentation, cs.serializedSignature...)
 
-	return types.StateProofSig, sigSlotByteRepresentation
+	return StateProofSig, sigSlotByteRepresentation
 }

@@ -2,9 +2,13 @@ package stateproofbasics
 
 import (
 	"encoding/binary"
+
+	"github.com/algorand/go-algorand-sdk/types"
+
 	"github.com/algorand/go-stateproof-verification/stateproofverification/merklesignature"
-	"github.com/algorand/go-stateproof-verification/types"
 )
+
+const StateProofPart types.HashID = "spp"
 
 // A Participant corresponds to an account whose AccountData.Status
 // is Online, and for which the expected sigRound satisfies
@@ -44,5 +48,5 @@ func (p Participant) ToBeHashed() (types.HashID, []byte) {
 	partCommitment = append(partCommitment, keyLifetimeBytes[:]...)
 	partCommitment = append(partCommitment, publicKeyBytes[:]...)
 
-	return types.StateProofPart, partCommitment
+	return StateProofPart, partCommitment
 }

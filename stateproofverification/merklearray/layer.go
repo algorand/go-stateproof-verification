@@ -1,8 +1,10 @@
 package merklearray
 
 import (
-	"github.com/algorand/go-stateproof-verification/types"
+	"github.com/algorand/go-algorand-sdk/types"
 )
+
+const MerkleArrayNode types.HashID = "MA"
 
 // A Layer of the Merkle tree consists of a dense array of hashes at that
 // level of the tree.  Hashes beyond the end of the array (e.g., if the
@@ -24,5 +26,5 @@ func (p *pair) ToBeHashed() (types.HashID, []byte) {
 	buf := make([]byte, 2*p.hashDigestSize)
 	copy(buf[:], p.l[:])
 	copy(buf[len(p.l):], p.r[:])
-	return types.MerkleArrayNode, buf[:]
+	return MerkleArrayNode, buf[:]
 }
