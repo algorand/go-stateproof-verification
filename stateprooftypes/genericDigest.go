@@ -1,4 +1,4 @@
-package stateproofbasics
+package stateprooftypes
 
 import "bytes"
 

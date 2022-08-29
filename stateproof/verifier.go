@@ -3,8 +3,9 @@ package stateproof
 import (
 	"errors"
 	"fmt"
+
 	"github.com/algorand/go-stateproof-verification/merklearray"
-	"github.com/algorand/go-stateproof-verification/stateproofbasics"
+	"github.com/algorand/go-stateproof-verification/stateprooftypes"
 )
 
 // Errors for the StateProof verifier
@@ -18,12 +19,12 @@ var (
 type Verifier struct {
 	strengthTarget         uint64
 	lnProvenWeight         uint64 // ln(provenWeight) as integer with 16 bits of precision
-	participantsCommitment stateproofbasics.GenericDigest
+	participantsCommitment stateprooftypes.GenericDigest
 }
 
 // MkVerifierWithLnProvenWeight constructs a verifier to check the state proof. the arguments for this function
 // represent all the verifier's trusted data. This function uses the Ln(provenWeight) approximation value
-func MkVerifierWithLnProvenWeight(partcom stateproofbasics.GenericDigest, lnProvenWt uint64, strengthTarget uint64) *Verifier {
+func MkVerifierWithLnProvenWeight(partcom stateprooftypes.GenericDigest, lnProvenWt uint64, strengthTarget uint64) *Verifier {
 	return &Verifier{
 		strengthTarget:         strengthTarget,
 		lnProvenWeight:         lnProvenWt,
@@ -33,7 +34,7 @@ func MkVerifierWithLnProvenWeight(partcom stateproofbasics.GenericDigest, lnProv
 
 // Verify checks if s is a valid state proof for the data on a round.
 // it uses the trusted data from the Verifier struct
-func (v *Verifier) Verify(round uint64, data stateproofbasics.MessageHash, s *StateProof) error {
+func (v *Verifier) Verify(round uint64, data stateprooftypes.MessageHash, s *StateProof) error {
 	if err := verifyStateProofTreesDepth(s); err != nil {
 		return err
 	}
@@ -50,8 +51,8 @@ func (v *Verifier) Verify(round uint64, data stateproofbasics.MessageHash, s *St
 		}
 	}
 
-	sigs := make(map[uint64]stateproofbasics.Hashable)
-	parts := make(map[uint64]stateproofbasics.Hashable)
+	sigs := make(map[uint64]stateprooftypes.Hashable)
+	parts := make(map[uint64]stateprooftypes.Hashable)
 
 	for pos, r := range s.Reveals {
 		sig, err := buildCommittableSignature(r.SigSlot)
