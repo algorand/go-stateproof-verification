@@ -3,8 +3,8 @@ package stateproof
 import (
 	"errors"
 	"fmt"
-	"github.com/algorand/go-algorand-sdk/types"
 	"github.com/algorand/go-stateproof-verification/merklearray"
+	"github.com/algorand/go-stateproof-verification/stateproofbasics"
 )
 
 // Errors for the StateProof verifier
@@ -18,12 +18,12 @@ var (
 type Verifier struct {
 	strengthTarget         uint64
 	lnProvenWeight         uint64 // ln(provenWeight) as integer with 16 bits of precision
-	participantsCommitment types.GenericDigest
+	participantsCommitment stateproofbasics.GenericDigest
 }
 
 // MkVerifierWithLnProvenWeight constructs a verifier to check the state proof. the arguments for this function
 // represent all the verifier's trusted data. This function uses the Ln(provenWeight) approximation value
-func MkVerifierWithLnProvenWeight(partcom types.GenericDigest, lnProvenWt uint64, strengthTarget uint64) *Verifier {
+func MkVerifierWithLnProvenWeight(partcom stateproofbasics.GenericDigest, lnProvenWt uint64, strengthTarget uint64) *Verifier {
 	return &Verifier{
 		strengthTarget:         strengthTarget,
 		lnProvenWeight:         lnProvenWt,
@@ -33,7 +33,7 @@ func MkVerifierWithLnProvenWeight(partcom types.GenericDigest, lnProvenWt uint64
 
 // Verify checks if s is a valid state proof for the data on a round.
 // it uses the trusted data from the Verifier struct
-func (v *Verifier) Verify(round uint64, data types.MessageHash, s *StateProof) error {
+func (v *Verifier) Verify(round uint64, data stateproofbasics.MessageHash, s *StateProof) error {
 	if err := verifyStateProofTreesDepth(s); err != nil {
 		return err
 	}
@@ -50,8 +50,8 @@ func (v *Verifier) Verify(round uint64, data types.MessageHash, s *StateProof) e
 		}
 	}
 
-	sigs := make(map[uint64]types.Hashable)
-	parts := make(map[uint64]types.Hashable)
+	sigs := make(map[uint64]stateproofbasics.Hashable)
+	parts := make(map[uint64]stateproofbasics.Hashable)
 
 	for pos, r := range s.Reveals {
 		sig, err := buildCommittableSignature(r.SigSlot)

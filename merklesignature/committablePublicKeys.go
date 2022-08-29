@@ -2,13 +2,12 @@ package merklesignature
 
 import (
 	"encoding/binary"
-
-	"github.com/algorand/go-algorand-sdk/types"
-
+	
+	"github.com/algorand/go-stateproof-verification/stateproofbasics"
 	"github.com/algorand/go-stateproof-verification/stateproofcrypto"
 )
 
-const KeysInMSS types.HashID = "KP"
+const KeysInMSS stateproofbasics.HashID = "KP"
 
 type (
 	// committablePublicKeyArray used to arrange the keys so a merkle tree could be build on them.
@@ -31,7 +30,7 @@ type (
 // In order to create a more SNARK-friendly commitment we must avoid using the msgpack infrastructure.
 // msgpack creates a compressed representation of the struct which might be varied in length, this will
 // be bad for creating SNARK
-func (e *CommittablePublicKey) ToBeHashed() (types.HashID, []byte) {
+func (e *CommittablePublicKey) ToBeHashed() (stateproofbasics.HashID, []byte) {
 	verifyingRawKey := e.VerifyingKey.GetFixedLengthHashableRepresentation()
 
 	var roundAsBytes [8]byte

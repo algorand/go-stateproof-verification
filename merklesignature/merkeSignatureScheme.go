@@ -4,8 +4,8 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
-	"github.com/algorand/go-algorand-sdk/types"
 	"github.com/algorand/go-stateproof-verification/merklearray"
+	"github.com/algorand/go-stateproof-verification/stateproofbasics"
 	"github.com/algorand/go-stateproof-verification/stateproofcrypto"
 )
 
@@ -82,7 +82,7 @@ func (v *Verifier) VerifyBytes(round uint64, msg []byte, sig *Signature) error {
 	// verification path and the index.
 	err = merklearray.VerifyVectorCommitment(
 		v.Commitment[:],
-		map[uint64]types.Hashable{sig.VectorCommitmentIndex: &ephkey},
+		map[uint64]stateproofbasics.Hashable{sig.VectorCommitmentIndex: &ephkey},
 		sig.Proof.ToProof(),
 	)
 	if err != nil {
