@@ -2,7 +2,6 @@ package stateproof
 
 import (
 	"encoding/binary"
-	"errors"
 	"fmt"
 	"github.com/algorand/go-stateproof-verification/stateproofcrypto"
 )
@@ -13,32 +12,6 @@ type committableSignatureSlot struct {
 	sigCommit           sigslotCommit
 	serializedSignature []byte
 	isEmptySlot         bool
-}
-
-// ErrIndexOutOfBound returned when an index is out of the array's bound
-var ErrIndexOutOfBound = errors.New("index is out of bound")
-
-// committableSignatureSlotArray is used to create a merkle tree on the stateproof's
-// signature array. it serializes the MSS signatures using a specific format
-// state proof signature array.
-//msgp:ignore committableSignatureSlotArray
-type committableSignatureSlotArray []sigslot
-
-func (sc committableSignatureSlotArray) Length() uint64 {
-	return uint64(len(sc))
-}
-
-func (sc committableSignatureSlotArray) Marshal(pos uint64) (stateproofcrypto.Hashable, error) {
-	if pos >= uint64(len(sc)) {
-		return nil, fmt.Errorf("%w: pos %d past end %d", ErrIndexOutOfBound, pos, len(sc))
-	}
-
-	signatureSlot, err := buildCommittableSignature(sc[pos].sigslotCommit)
-	if err != nil {
-		return nil, err
-	}
-
-	return signatureSlot, nil
 }
 
 func buildCommittableSignature(sigCommit sigslotCommit) (*committableSignatureSlot, error) {
