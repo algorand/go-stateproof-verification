@@ -59,6 +59,7 @@ func makeCoinGenerator(choice *coinChoiceSeed) coinGenerator {
 	choice.version = VersionForCoinGenerator
 	rep := stateproofcrypto.HashRep(choice)
 	shk := sha3.NewShake256()
+	//nolint:errcheck // ShakeHash.Write never returns error
 	shk.Write(rep)
 
 	threshold := prepareRejectionSamplingThreshold(choice.signedWeight)
@@ -95,6 +96,7 @@ func (cg *coinGenerator) getNextCoin() uint64 {
 	var randNumFromXof uint64
 	for {
 		var shakeDigest [8]byte
+		//nolint:errcheck // ShakeHash.Read never returns error
 		cg.shkContext.Read(shakeDigest[:])
 		randNumFromXof = binary.LittleEndian.Uint64(shakeDigest[:])
 
