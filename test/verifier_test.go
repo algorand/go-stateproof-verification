@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	
+
 	"github.com/algorand/go-stateproof-verification/stateproof"
 	"github.com/algorand/go-stateproof-verification/stateproofcrypto"
 )
