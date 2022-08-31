@@ -4,7 +4,6 @@ import (
 	"crypto/sha256"
 	"crypto/sha512"
 	"errors"
-	"fmt"
 	"hash"
 
 	"github.com/algorand/go-sumhash"
@@ -88,20 +87,6 @@ func (h HashType) String() string {
 		return "sha256"
 	default:
 		return ""
-	}
-}
-
-// UnmarshalHashType decodes a string into the HashType enum
-func UnmarshalHashType(s string) (HashType, error) {
-	switch s {
-	case "sha512_256":
-		return Sha512_256, nil
-	case "sumhash":
-		return Sumhash, nil
-	case "sha256":
-		return Sha256, nil
-	default:
-		return 0, fmt.Errorf("HashType not supported: %s", s)
 	}
 }
 
