@@ -3,7 +3,6 @@ package stateproof
 import (
 	"github.com/algorand/go-stateproof-verification/merklearray"
 	"github.com/algorand/go-stateproof-verification/merklesignature"
-	"github.com/algorand/go-stateproof-verification/stateproofbasics"
 	"github.com/algorand/go-stateproof-verification/stateproofcrypto"
 )
 
@@ -26,8 +25,8 @@ type sigslotCommit struct {
 type Reveal struct {
 	_struct struct{} `codec:",omitempty,omitemptyarray"`
 
-	SigSlot sigslotCommit                `codec:"s"`
-	Part    stateproofbasics.Participant `codec:"p"`
+	SigSlot sigslotCommit `codec:"s"`
+	Part    Participant   `codec:"p"`
 }
 
 // StateProof represents a proof on Algorand's state.

@@ -1,8 +1,8 @@
-package stateproofbasics
+package stateproof
 
 import (
 	"encoding/binary"
-	
+
 	"github.com/algorand/go-stateproof-verification/merklesignature"
 	"github.com/algorand/go-stateproof-verification/stateproofcrypto"
 )
