@@ -32,8 +32,8 @@ type FalconVerifier struct {
 }
 
 // MsgIsZero returns whether this is a zero value
-func (z *FalconVerifier) MsgIsZero() bool {
-	return ((*z).PublicKey == (FalconPublicKey{}))
+func (d *FalconVerifier) MsgIsZero() bool {
+	return ((*d).PublicKey == (FalconPublicKey{}))
 }
 
 // VerifyBytes follows falcon algorithm to verify a signature.
@@ -50,8 +50,8 @@ func (d *FalconVerifier) GetFixedLengthHashableRepresentation() []byte {
 }
 
 // MsgIsZero returns whether this is a zero value
-func (z FalconSignature) MsgIsZero() bool {
-	return len(z) == 0
+func (s FalconSignature) MsgIsZero() bool {
+	return len(s) == 0
 }
 
 // GetFixedLengthHashableRepresentation returns a serialized version of the signature
