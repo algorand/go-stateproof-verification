@@ -1,9 +1,8 @@
 package test
 
 import (
+	_ "embed"
 	"encoding/json"
-	"io/ioutil"
-	"path"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -12,13 +11,14 @@ import (
 	"github.com/algorand/go-stateproof-verification/stateproofcrypto"
 )
 
-func readJsonMarshaledFile(filePath string, target interface{}, assertions *require.Assertions) {
-	contents, err := ioutil.ReadFile(filePath)
-	assertions.NoError(err)
+//go:embed "resources/previousVotersCommitment.json"
+var previousVotersCommitmentData []byte
 
-	err = json.Unmarshal(contents, &target)
-	assertions.NoError(err)
-}
+//go:embed "resources/stateProofMessageHash.json"
+var stateProofMessageHashData []byte
+
+//go:embed "resources/stateProof.json"
+var stateProofData []byte
 
 func TestVerifier_Verify(t *testing.T) {
 	a := require.New(t)
@@ -28,7 +28,8 @@ func TestVerifier_Verify(t *testing.T) {
 	previousLnProvenWeight := uint64(2334949)
 	var previousVotersCommitment stateproofcrypto.GenericDigest
 
-	readJsonMarshaledFile(path.Join("resources", "previousVotersCommitment.json"), &previousVotersCommitment, a)
+	err := json.Unmarshal(previousVotersCommitmentData, &previousVotersCommitment)
+	a.NoError(err)
 
 	verifier := stateproof.MkVerifierWithLnProvenWeight(previousVotersCommitment, previousLnProvenWeight, strengthTarget)
 
@@ -37,9 +38,11 @@ func TestVerifier_Verify(t *testing.T) {
 	var stateProofMessageHash stateproofcrypto.MessageHash
 	var stateProof stateproof.StateProof
 
-	readJsonMarshaledFile(path.Join("resources", "stateProofMessageHash.json"), &stateProofMessageHash, a)
-	readJsonMarshaledFile(path.Join("resources", "stateProof.json"), &stateProof, a)
+	err = json.Unmarshal(stateProofMessageHashData, &stateProofMessageHash)
+	a.NoError(err)
+	err = json.Unmarshal(stateProofData, &stateProof)
+	a.NoError(err)
 
-	err := verifier.Verify(lastAttestedRound, stateProofMessageHash, &stateProof)
+	err = verifier.Verify(lastAttestedRound, stateProofMessageHash, &stateProof)
 	a.NoError(err)
 }
