@@ -24,14 +24,6 @@ type (
 	FalconSignature []byte
 )
 
-// FalconSigner is the implementation of Signer for the Falcon signature scheme.
-type FalconSigner struct {
-	_struct struct{} `codec:",omitempty,omitemptyarray"`
-
-	PublicKey  FalconPublicKey  `codec:"pk"`
-	PrivateKey FalconPrivateKey `codec:"sk"`
-}
-
 // FalconVerifier implements the type Verifier interface for the falcon signature scheme.
 type FalconVerifier struct {
 	_struct struct{} `codec:",omitempty,omitemptyarray"`
