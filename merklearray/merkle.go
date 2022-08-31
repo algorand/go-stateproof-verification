@@ -4,9 +4,10 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"github.com/algorand/go-stateproof-verification/stateproofcrypto"
 	"hash"
 	"sort"
+
+	"github.com/algorand/go-stateproof-verification/stateproofcrypto"
 )
 
 const (

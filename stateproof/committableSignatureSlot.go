@@ -3,6 +3,7 @@ package stateproof
 import (
 	"encoding/binary"
 	"fmt"
+
 	"github.com/algorand/go-stateproof-verification/stateproofcrypto"
 )
 

@@ -3,9 +3,9 @@ package stateproof
 import (
 	"errors"
 	"fmt"
-	"github.com/algorand/go-stateproof-verification/stateproofcrypto"
 
 	"github.com/algorand/go-stateproof-verification/merklearray"
+	"github.com/algorand/go-stateproof-verification/stateproofcrypto"
 )
 
 // Errors for the StateProof verifier

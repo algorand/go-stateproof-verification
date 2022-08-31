@@ -2,9 +2,10 @@ package stateproof
 
 import (
 	"encoding/binary"
-	"github.com/algorand/go-stateproof-verification/stateproofcrypto"
 	"golang.org/x/crypto/sha3"
 	"math/big"
+
+	"github.com/algorand/go-stateproof-verification/stateproofcrypto"
 )
 
 const StateProofCoin stateproofcrypto.HashID = "spc"
