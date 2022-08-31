@@ -17,7 +17,6 @@
 # Other misc files
 *.log
 *.log.archive
-*.out
 *.prof
 coverage.html
 

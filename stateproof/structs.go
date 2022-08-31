@@ -7,19 +7,6 @@ import (
 	"github.com/algorand/go-stateproof-verification/stateproofcrypto"
 )
 
-//msgp:ignore sigslot
-type sigslot struct {
-	// Weight is the weight of the participant signing this message.
-	// This information is tracked here for convenience, but it does
-	// not appear in the commitment to the sigs array; it comes from
-	// the Weight field of the corresponding participant.
-	Weight uint64
-
-	// Include the parts of the sigslot that form the commitment to
-	// the sigs array.
-	sigslotCommit
-}
-
 // A sigslotCommit is a single slot in the sigs array that forms the state proof.
 type sigslotCommit struct {
 	_struct struct{} `codec:",omitempty,omitemptyarray"`
