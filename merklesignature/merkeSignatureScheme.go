@@ -45,8 +45,8 @@ type (
 )
 
 // MsgIsZero returns whether this is a zero value
-func (z *Signature) MsgIsZero() bool {
-	return ((*z).Signature.MsgIsZero()) && ((*z).VectorCommitmentIndex == 0) && ((*z).Proof.MsgIsZero()) && ((*z).VerifyingKey.MsgIsZero())
+func (s *Signature) MsgIsZero() bool {
+	return ((*s).Signature.MsgIsZero()) && ((*s).VectorCommitmentIndex == 0) && ((*s).Proof.MsgIsZero()) && ((*s).VerifyingKey.MsgIsZero())
 }
 
 // ValidateSaltVersion validates that the version of the signature is matching the expected version

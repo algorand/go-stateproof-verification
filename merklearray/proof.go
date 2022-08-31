@@ -30,8 +30,8 @@ type SingleLeafProof struct {
 }
 
 // MsgIsZero returns whether this is a zero value
-func (z *SingleLeafProof) MsgIsZero() bool {
-	return (len((*z).Proof.Path) == 0) && ((*z).Proof.HashFactory.MsgIsZero()) && ((*z).Proof.TreeDepth == 0)
+func (p *SingleLeafProof) MsgIsZero() bool {
+	return (len((*p).Proof.Path) == 0) && ((*p).Proof.HashFactory.MsgIsZero()) && ((*p).Proof.TreeDepth == 0)
 }
 
 // GetFixedLengthHashableRepresentation serializes the proof into a sequence of bytes.
