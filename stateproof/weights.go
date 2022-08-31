@@ -2,7 +2,6 @@ package stateproof
 
 import (
 	"errors"
-	"math"
 	"math/big"
 	"math/bits"
 )
@@ -11,24 +10,11 @@ import (
 var (
 	ErrTooManyReveals           = errors.New("too many reveals in state proof")
 	ErrZeroSignedWeight         = errors.New("signed weight cannot be zero")
-	ErrIllegalInputForLnApprox  = errors.New("cannot calculate a ln integer value for 0")
 	ErrInsufficientSingedWeight = errors.New("the number of reveals is not large enough to prove that the desired weight signed, with the desired security level")
 )
 
 func bigInt(num uint64) *big.Int {
 	return (&big.Int{}).SetUint64(num)
-}
-
-// LnIntApproximation returns a uint64 approximation
-func LnIntApproximation(x uint64) (uint64, error) {
-	if x == 0 {
-		return 0, ErrIllegalInputForLnApprox
-	}
-	result := math.Log(float64(x))
-	precision := uint64(1 << precisionBits)
-	expandWithPrecision := result * float64(precision)
-	return uint64(math.Ceil(expandWithPrecision)), nil
-
 }
 
 // verifyWeights makes sure that the number of reveals in the state proof is correct with respect
