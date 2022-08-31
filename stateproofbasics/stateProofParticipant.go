@@ -3,10 +3,10 @@ package stateproofbasics
 import (
 	"encoding/binary"
 	"github.com/algorand/go-stateproof-verification/merklesignature"
-	"github.com/algorand/go-stateproof-verification/stateprooftypes"
+	"github.com/algorand/go-stateproof-verification/stateproofcrypto"
 )
 
-const StateProofPart stateprooftypes.HashID = "spp"
+const StateProofPart stateproofcrypto.HashID = "spp"
 
 // A Participant corresponds to an account whose AccountData.Status
 // is Online, and for which the expected sigRound satisfies
@@ -31,7 +31,7 @@ type Participant struct {
 // In order to create a more SNARK-friendly commitments on the signature we must avoid using the msgpack infrastructure.
 // msgpack creates a compressed representation of the struct which might be varied in length, which will
 // be bad for creating SNARK
-func (p Participant) ToBeHashed() (stateprooftypes.HashID, []byte) {
+func (p Participant) ToBeHashed() (stateproofcrypto.HashID, []byte) {
 
 	var weightAsBytes [8]byte
 	binary.LittleEndian.PutUint64(weightAsBytes[:], p.Weight)

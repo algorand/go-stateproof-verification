@@ -1,4 +1,4 @@
-package stateprooftypes
+package stateproofcrypto
 
 import (
 	"crypto/sha256"

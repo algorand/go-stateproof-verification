@@ -1,13 +1,13 @@
 package merklesignature
 
 import (
-	"github.com/algorand/go-stateproof-verification/stateprooftypes"
+	"github.com/algorand/go-stateproof-verification/stateproofcrypto"
 )
 
 // HashType/ hashSize relate to the type of hash this package uses.
 const (
-	MerkleSignatureSchemeHashFunction = stateprooftypes.Sumhash
-	MerkleSignatureSchemeRootSize     = stateprooftypes.SumhashDigestSize
+	MerkleSignatureSchemeHashFunction = stateproofcrypto.Sumhash
+	MerkleSignatureSchemeRootSize     = stateproofcrypto.SumhashDigestSize
 	// KeyLifetimeDefault defines the default lifetime of a key in the merkle signature scheme (in rounds).
 	KeyLifetimeDefault = 256
 

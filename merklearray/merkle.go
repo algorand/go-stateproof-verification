@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"github.com/algorand/go-stateproof-verification/stateprooftypes"
+	"github.com/algorand/go-stateproof-verification/stateproofcrypto"
 	"hash"
 	"sort"
 )
@@ -41,14 +41,14 @@ type Tree struct {
 	NumOfElements uint64 `codec:"nl"`
 
 	// Hash represents the hash function which is being used on elements in this tree.
-	Hash stateprooftypes.HashFactory `codec:"hsh"`
+	Hash stateproofcrypto.HashFactory `codec:"hsh"`
 
 	// IsVectorCommitment determines whether the tree was built as a vector commitment
 	IsVectorCommitment bool `codec:"vc"`
 }
 
-func convertIndexes(elems map[uint64]stateprooftypes.Hashable, treeDepth uint8) (map[uint64]stateprooftypes.Hashable, error) {
-	msbIndexedElements := make(map[uint64]stateprooftypes.Hashable, len(elems))
+func convertIndexes(elems map[uint64]stateproofcrypto.Hashable, treeDepth uint8) (map[uint64]stateproofcrypto.Hashable, error) {
+	msbIndexedElements := make(map[uint64]stateproofcrypto.Hashable, len(elems))
 	for i, e := range elems {
 		idx, err := merkleTreeToVectorCommitmentIndex(i, treeDepth)
 		if err != nil {
@@ -59,19 +59,19 @@ func convertIndexes(elems map[uint64]stateprooftypes.Hashable, treeDepth uint8) 
 	return msbIndexedElements, nil
 }
 
-func hashLeaves(elems map[uint64]stateprooftypes.Hashable, treeDepth uint8, hash hash.Hash) (map[uint64]stateprooftypes.GenericDigest, error) {
-	hashedLeaves := make(map[uint64]stateprooftypes.GenericDigest, len(elems))
+func hashLeaves(elems map[uint64]stateproofcrypto.Hashable, treeDepth uint8, hash hash.Hash) (map[uint64]stateproofcrypto.GenericDigest, error) {
+	hashedLeaves := make(map[uint64]stateproofcrypto.GenericDigest, len(elems))
 	for i, element := range elems {
 		if i >= (1 << treeDepth) {
 			return nil, fmt.Errorf("pos %d >= 1^treeDepth %d: %w", i, 1<<treeDepth, ErrPosOutOfBound)
 		}
-		hashedLeaves[i] = stateprooftypes.GenericHashObj(hash, element)
+		hashedLeaves[i] = stateproofcrypto.GenericHashObj(hash, element)
 	}
 
 	return hashedLeaves, nil
 }
 
-func buildFirstPartialLayer(elems map[uint64]stateprooftypes.GenericDigest) partialLayer {
+func buildFirstPartialLayer(elems map[uint64]stateproofcrypto.GenericDigest) partialLayer {
 	pl := make(partialLayer, 0, len(elems))
 	for pos, elem := range elems {
 		pl = append(pl, layerItem{
@@ -84,7 +84,7 @@ func buildFirstPartialLayer(elems map[uint64]stateprooftypes.GenericDigest) part
 	return pl
 }
 
-func inspectRoot(root stateprooftypes.GenericDigest, pl partialLayer) error {
+func inspectRoot(root stateproofcrypto.GenericDigest, pl partialLayer) error {
 	computedroot := pl[0]
 	if computedroot.pos != 0 || !bytes.Equal(computedroot.hash, root) {
 		return ErrRootMismatch
@@ -92,7 +92,7 @@ func inspectRoot(root stateprooftypes.GenericDigest, pl partialLayer) error {
 	return nil
 }
 
-func verifyPath(root stateprooftypes.GenericDigest, proof *Proof, pl partialLayer) error {
+func verifyPath(root stateproofcrypto.GenericDigest, proof *Proof, pl partialLayer) error {
 	hints := proof.Path
 
 	s := &siblings{
@@ -113,7 +113,7 @@ func verifyPath(root stateprooftypes.GenericDigest, proof *Proof, pl partialLaye
 // Verify ensures that the positions in elems correspond to the respective hashes
 // in a tree with the given root hash.  The proof is expected to be the proof
 // returned by Prove().
-func Verify(root stateprooftypes.GenericDigest, elems map[uint64]stateprooftypes.Hashable, proof *Proof) error {
+func Verify(root stateproofcrypto.GenericDigest, elems map[uint64]stateproofcrypto.Hashable, proof *Proof) error {
 	if proof == nil {
 		return ErrProofIsNil
 	}
@@ -135,7 +135,7 @@ func Verify(root stateprooftypes.GenericDigest, elems map[uint64]stateprooftypes
 }
 
 // VerifyVectorCommitment verifies a vector commitment proof against a given root.
-func VerifyVectorCommitment(root stateprooftypes.GenericDigest, elems map[uint64]stateprooftypes.Hashable, proof *Proof) error {
+func VerifyVectorCommitment(root stateproofcrypto.GenericDigest, elems map[uint64]stateproofcrypto.Hashable, proof *Proof) error {
 	if proof == nil {
 		return ErrProofIsNil
 	}

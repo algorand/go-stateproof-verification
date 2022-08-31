@@ -4,10 +4,9 @@ import (
 	"encoding/binary"
 
 	"github.com/algorand/go-stateproof-verification/stateproofcrypto"
-	"github.com/algorand/go-stateproof-verification/stateprooftypes"
 )
 
-const KeysInMSS stateprooftypes.HashID = "KP"
+const KeysInMSS stateproofcrypto.HashID = "KP"
 
 type (
 	// committablePublicKeyArray used to arrange the keys so a merkle tree could be build on them.
@@ -30,7 +29,7 @@ type (
 // In order to create a more SNARK-friendly commitment we must avoid using the msgpack infrastructure.
 // msgpack creates a compressed representation of the struct which might be varied in length, this will
 // be bad for creating SNARK
-func (e *CommittablePublicKey) ToBeHashed() (stateprooftypes.HashID, []byte) {
+func (e *CommittablePublicKey) ToBeHashed() (stateproofcrypto.HashID, []byte) {
 	verifyingRawKey := e.VerifyingKey.GetFixedLengthHashableRepresentation()
 
 	var roundAsBytes [8]byte

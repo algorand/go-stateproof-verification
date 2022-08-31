@@ -4,11 +4,10 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
-
-	"github.com/algorand/go-stateproof-verification/stateprooftypes"
+	"github.com/algorand/go-stateproof-verification/stateproofcrypto"
 )
 
-const StateProofSig stateprooftypes.HashID = "sps"
+const StateProofSig stateproofcrypto.HashID = "sps"
 
 type committableSignatureSlot struct {
 	sigCommit           sigslotCommit
@@ -29,7 +28,7 @@ func (sc committableSignatureSlotArray) Length() uint64 {
 	return uint64(len(sc))
 }
 
-func (sc committableSignatureSlotArray) Marshal(pos uint64) (stateprooftypes.Hashable, error) {
+func (sc committableSignatureSlotArray) Marshal(pos uint64) (stateproofcrypto.Hashable, error) {
 	if pos >= uint64(len(sc)) {
 		return nil, fmt.Errorf("%w: pos %d past end %d", ErrIndexOutOfBound, pos, len(sc))
 	}
@@ -60,7 +59,7 @@ func buildCommittableSignature(sigCommit sigslotCommit) (*committableSignatureSl
 // In order to create a more SNARK-friendly commitment we must avoid using the msgpack infrastructure.
 // msgpack creates a compressed representation of the struct which might be varied in length, this will
 // be bad for creating SNARK
-func (cs *committableSignatureSlot) ToBeHashed() (stateprooftypes.HashID, []byte) {
+func (cs *committableSignatureSlot) ToBeHashed() (stateproofcrypto.HashID, []byte) {
 	if cs.isEmptySlot {
 		return StateProofSig, []byte{}
 	}

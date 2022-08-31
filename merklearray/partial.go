@@ -2,9 +2,8 @@ package merklearray
 
 import (
 	"fmt"
+	"github.com/algorand/go-stateproof-verification/stateproofcrypto"
 	"hash"
-
-	"github.com/algorand/go-stateproof-verification/stateprooftypes"
 )
 
 // siblings represents the siblings needed to compute the root hash
@@ -13,12 +12,12 @@ import (
 // or use the set of sibling hints, if tree is nil.
 type siblings struct {
 	tree  *Tree
-	hints []stateprooftypes.GenericDigest
+	hints []stateproofcrypto.GenericDigest
 }
 
 // get returns the sibling from tree level l (0 being the leaves)
 // position i.
-func (s *siblings) get(l uint64, i uint64) (res stateprooftypes.GenericDigest, err error) {
+func (s *siblings) get(l uint64, i uint64) (res stateproofcrypto.GenericDigest, err error) {
 	if s.tree == nil {
 		if len(s.hints) > 0 {
 			res = s.hints[0].ToSlice()
@@ -51,7 +50,7 @@ type partialLayer []layerItem
 
 type layerItem struct {
 	pos  uint64
-	hash stateprooftypes.GenericDigest
+	hash stateproofcrypto.GenericDigest
 }
 
 // up takes a partial Layer at level l, and returns the next-higher (partial)
@@ -71,7 +70,7 @@ func (pl partialLayer) up(s *siblings, l uint64, doHash bool, hsh hash.Hash) (pa
 		posHash := item.hash
 
 		siblingPos := pos ^ 1
-		var siblingHash stateprooftypes.GenericDigest
+		var siblingHash stateproofcrypto.GenericDigest
 		if i+1 < len(pl) && pl[i+1].pos == siblingPos {
 			// If our sibling is also in the partial Layer, use its
 			// hash (and skip over its position).
@@ -87,7 +86,7 @@ func (pl partialLayer) up(s *siblings, l uint64, doHash bool, hsh hash.Hash) (pa
 		}
 
 		nextLayerPos := pos / 2
-		var nextLayerHash stateprooftypes.GenericDigest
+		var nextLayerHash stateproofcrypto.GenericDigest
 
 		if doHash {
 			var p pair
@@ -101,7 +100,7 @@ func (pl partialLayer) up(s *siblings, l uint64, doHash bool, hsh hash.Hash) (pa
 				p.l = siblingHash
 				p.r = posHash
 			}
-			nextLayerHash = stateprooftypes.GenericHashObj(hsh, &p)
+			nextLayerHash = stateproofcrypto.GenericHashObj(hsh, &p)
 		}
 
 		res = append(res, layerItem{
