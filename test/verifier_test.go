@@ -24,14 +24,13 @@ func TestVerifier_Verify(t *testing.T) {
 	a := require.New(t)
 
 	// Generated from betanet.
-	strengthTarget := uint64(256)
 	previousLnProvenWeight := uint64(2334949)
 	var previousVotersCommitment stateproofcrypto.GenericDigest
 
 	err := json.Unmarshal(previousVotersCommitmentData, &previousVotersCommitment)
 	a.NoError(err)
 
-	verifier := stateproof.MkVerifierWithLnProvenWeight(previousVotersCommitment, previousLnProvenWeight, strengthTarget)
+	verifier := stateproof.MkVerifierWithLnProvenWeight(previousVotersCommitment, previousLnProvenWeight)
 
 	// Generated from betanet.
 	lastAttestedRound := uint64(20134400)

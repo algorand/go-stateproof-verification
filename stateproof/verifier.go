@@ -22,11 +22,14 @@ type Verifier struct {
 	participantsCommitment stateproofcrypto.GenericDigest
 }
 
+// StrengthTarget is an Algorand consensus parameter.
+const StrengthTarget = uint64(256)
+
 // MkVerifierWithLnProvenWeight constructs a verifier to check the state proof. the arguments for this function
 // represent all the verifier's trusted data. This function uses the Ln(provenWeight) approximation value
-func MkVerifierWithLnProvenWeight(partcom stateproofcrypto.GenericDigest, lnProvenWt uint64, strengthTarget uint64) *Verifier {
+func MkVerifierWithLnProvenWeight(partcom stateproofcrypto.GenericDigest, lnProvenWt uint64) *Verifier {
 	return &Verifier{
-		strengthTarget:         strengthTarget,
+		strengthTarget:         StrengthTarget,
 		lnProvenWeight:         lnProvenWt,
 		participantsCommitment: partcom,
 	}
