@@ -34,14 +34,15 @@ import (
 	"github.com/algorand/go-algorand-sdk/types"
 )
 
+// strengthTarget is a consensus parameter.
+const strengthTarget = uint64(256)
+
 func main() {
 	// verifiedVotersCommitment is the VotersCommitment extracted from the previously verified state proof message.
 	var verifiedVotersCommitment stateproofcrypto.GenericDigest
 	// verifiedVotersCommitment is the LnProvenWeight extracted from the previously verified state proof message.
 	var verifiedLnProvenWeight uint64
-	// strengthTarget is a consensus parameter.
-	var strengthTarget uint64
-
+	
 	// We create a verifier using the aforementioned previously verified data.
 	verifier := stateproof.MkVerifierWithLnProvenWeight(verifiedVotersCommitment, verifiedLnProvenWeight, strengthTarget)
 
