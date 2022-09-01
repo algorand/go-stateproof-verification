@@ -22,14 +22,14 @@ type Verifier struct {
 	participantsCommitment stateproofcrypto.GenericDigest
 }
 
-// StrengthTarget represents the security strength of a state proof that can be accepted by the verifier.
-const StrengthTarget = uint64(256)
+// strengthTarget represents the security strength of a state proof that can be accepted by the verifier.
+const strengthTarget = uint64(256)
 
 // MkVerifierWithLnProvenWeight constructs a verifier to check the state proof. the arguments for this function
 // represent all the verifier's trusted data. This function uses the Ln(provenWeight) approximation value
 func MkVerifierWithLnProvenWeight(partcom stateproofcrypto.GenericDigest, lnProvenWt uint64) *Verifier {
 	return &Verifier{
-		strengthTarget:         StrengthTarget,
+		strengthTarget:         strengthTarget,
 		lnProvenWeight:         lnProvenWt,
 		participantsCommitment: partcom,
 	}
