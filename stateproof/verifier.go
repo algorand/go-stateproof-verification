@@ -22,7 +22,7 @@ type Verifier struct {
 	participantsCommitment stateproofcrypto.GenericDigest
 }
 
-// StrengthTarget is an Algorand consensus parameter.
+// StrengthTarget represents the security strength of a state proof that can be accepted by the verifier.
 const StrengthTarget = uint64(256)
 
 // MkVerifierWithLnProvenWeight constructs a verifier to check the state proof. the arguments for this function
