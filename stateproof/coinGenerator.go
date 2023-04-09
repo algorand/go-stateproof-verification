@@ -15,6 +15,7 @@ const StateProofCoin stateproofcrypto.HashID = "spc"
 // the index of the coin to reveal as part of the state proof.
 type coinChoiceSeed struct {
 	// @mirrorOf:go-algorand/crypto/stateproof/coinGenerator.go::coinChoiceSeed
+	
 	// the ToBeHashed function should be updated when fields are added to this structure
 	version        byte
 	partCommitment stateproofcrypto.GenericDigest
