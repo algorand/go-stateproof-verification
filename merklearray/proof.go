@@ -19,8 +19,6 @@ type Proof struct {
 	// TreeDepth represents the depth of the tree that is being proven.
 	// It is the number of edges from the root to a leaf.
 	TreeDepth uint8 `codec:"td"`
-
-	// another comment at the bottom
 }
 
 // SingleLeafProof is used to convince a verifier about membership of a specific

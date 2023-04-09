@@ -24,6 +24,7 @@ type (
 	// (for the root given in the long-term public key).
 	// More details can be found on Algorand's spec
 	Signature struct {
+		// @mirrorOf:go-algorand/crypto/merklesignature/merkleSignatureScheme.go::Signature
 		_struct struct{} `codec:",omitempty,omitemptyarray"`
 
 		Signature             stateproofcrypto.FalconSignature `codec:"sig"`
