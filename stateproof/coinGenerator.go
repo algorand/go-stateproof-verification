@@ -2,8 +2,9 @@ package stateproof
 
 import (
 	"encoding/binary"
-	"golang.org/x/crypto/sha3"
 	"math/big"
+
+	"golang.org/x/crypto/sha3"
 
 	"github.com/algorand/go-stateproof-verification/stateproofcrypto"
 )
@@ -13,6 +14,7 @@ const StateProofCoin stateproofcrypto.HashID = "spc"
 // The coinChoiceSeed defines the randomness seed that will be given to an XOF function. This will be used for choosing
 // the index of the coin to reveal as part of the state proof.
 type coinChoiceSeed struct {
+	// @mirrorOf:go-algorand/crypto/stateproof/coinGenerator.go::coinChoiceSeed
 	// the ToBeHashed function should be updated when fields are added to this structure
 	version        byte
 	partCommitment stateproofcrypto.GenericDigest

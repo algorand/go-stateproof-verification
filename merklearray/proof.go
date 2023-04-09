@@ -8,6 +8,7 @@ import (
 // at indexes i0,i1...in on a tree. The verifier has a trusted value of the tree
 // root hash.
 type Proof struct {
+	// @mirrorOf:go-algorand/crypto/merklearray/proof.go::Proof
 	_struct struct{} `codec:",omitempty,omitemptyarray"`
 
 	// Path is bounded by MaxNumLeavesOnEncodedTree since there could be multiple reveals, and
